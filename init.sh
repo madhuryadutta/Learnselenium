@@ -1,15 +1,15 @@
 pip install -r requirements.txt
 pip install python-dotenv
 apt list --installed  
-sudo apt purge google-chrome-stable 
-sudo apt update
+yes |sudo apt purge google-chrome-stable 
+yes |sudo apt update
 pip install chromedriver-autoinstaller selenium pyvirtualdisplay
-sudo apt-get install xvfb -y
+yes | sudo apt-get install xvfb
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo dpkg -i google-chrome-stable_current_amd64.deb
-sudo apt-get -f install -y
+yes |sudo dpkg -i google-chrome-stable_current_amd64.deb
+yes |sudo apt-get -f install
 google-chrome
-sudo dpkg -i google-chrome-stable_current_amd64.deb
+yes |sudo dpkg -i google-chrome-stable_current_amd64.deb
 
 
 #     1  ls

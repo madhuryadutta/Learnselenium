@@ -16,11 +16,11 @@ load_dotenv()
 
 # Get the connection string from the environment variable
 
-connection_string = os.getenv('DB_URL_ENV')
+# connection_string = os.getenv('DB_URL_ENV')
 
 # Connect to the Postgres database
 
-conn = psycopg2.connect(connection_string)
+# conn = psycopg2.connect(connection_string)
 
 # conn.autocommit = True
 
@@ -41,30 +41,30 @@ def func_insert(input_word,word1,explanation1,english1,translate1,keywords1):
     keywords=keywords1.replace("'", "''")
 
     # Create a cursor object
-    cur = conn.cursor()
+    # cur = conn.cursor()
 
     #Create Sql query
     sql_query='''INSERT INTO words_tables (word, explanation, english, translate, keywords, as_soundex)
                     VALUES (' '''+ input_word + ''' ', ' '''+ explanation + ''' ', ' ''' + english + ''' ', ' '''+word+ ''' ', ' ''' +keywords +''' ', 'NA');'''
     print(sql_query)
-    try:
-        cur.execute(sql_query)
-    except psycopg2.IntegrityError:
-        conn.rollback()
-        print('data already exist')
-    else:
-        with open('output.sql', 'a', encoding='utf-8') as f:
-            f.write(sql_query)
-            f.close()
-        # conn.commit()
-
-    # with open('output.sql', 'a', encoding='utf-8') as f:
+    # try:
+    #     cur.execute(sql_query)
+    # except psycopg2.IntegrityError:
+    #     conn.rollback()
+    #     print('data already exist')
+    # else:
+    #     with open('output.sql', 'a', encoding='utf-8') as f:
     #         f.write(sql_query)
     #         f.close()
+        # conn.commit()
+
+    with open('output.sql', 'a', encoding='utf-8') as f:
+            f.write(sql_query)
+            f.close()
 
 
     # Close the cursor and connection
-    cur.close()
+    # cur.close()
 
 # declaration block 
 url = os.getenv('URL_ENV')
@@ -132,4 +132,4 @@ for x in converted_list:
         time.sleep(.1)
         func_scrap_data(x)
 
-conn.close()
+# conn.close()
