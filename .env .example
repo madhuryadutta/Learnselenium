@@ -1,0 +1,2 @@
+DB_URL_ENV=postgresql://janedoe:mypassword@localhost:26257/mydb
+URL_ENV=https://www.example.in

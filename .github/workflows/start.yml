@@ -1,0 +1,99 @@
+name: Run Selenium On GitHub Action
+on: [push]
+# on:
+#   workflow_dispatch:
+jobs:
+  Testing:
+    runs-on: ubuntu-latest
+    environment: PRODUCTION
+    steps:
+      - name: Checking out repo
+        uses: actions/checkout@v3
+      - name: Setting up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Env Access Test
+        run: echo ${{env.TEST}}
+
+      - name: Start Shell script action
+        run: sudo chmod +x init.sh && ./init.sh
+
+      - name: Running the Python script
+        run:  | 
+          pip install -r requirements.txt
+          python dry_run.py
+
+      - name: Commit and Push The Results From Python Selenium Action
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "GitHub Actions Results added"
+          git push
+
+
+
+
+
+
+
+# name: Run Selenium On GitHub Action
+# on: [push]
+# # on:
+# #   workflow_dispatch:
+# jobs:
+#   scrape:
+#     runs-on: ubuntu-latest
+#     environment: ENV_STORAGE
+#     steps:
+#       - name: Checking out repo
+#         uses: actions/checkout@v3
+#       - name: Setting up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: "3.9"
+
+#       - name: Env Access Test
+#         run: echo ${{env.TEST}}
+
+#       # - name: pgsql connect issue
+#       #   run: sudo ln -s /tmp/.s.PGSQL.5432 /var/run/postgresql/.s.PGSQL.5432
+
+#       - name: Installing package list
+#         run: apt list --installed
+ 
+#       - name: Removing previous chrome instances on runner
+#         run: sudo apt purge google-chrome-stable
+#         # Need to fetch reqs if needed
+
+#       - name: Installing Chrome
+#         run: |
+#           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+#           sudo dpkg -i google-chrome-stable_current_amd64.deb
+#           sudo apt-get -f install
+#           sudo dpkg -i google-chrome-stable_current_amd64.deb
+      
+      
+#       - name: Installing all necessary packages
+#         run: pip install chromedriver-autoinstaller selenium pyvirtualdisplay
+#       - name: Install xvfb
+#         run: sudo apt-get install xvfb
+
+#       - name: Running the Python script
+#         run:  | 
+#           pip install -r requirements.txt
+#           python headless.py
+
+#       - name: Commit and Push The Results From Python Selenium Action
+#         run: |
+#           git config --global user.name "github-actions[bot]"
+#           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+#           git add -A
+#           git commit -m "GitHub Actions Results added"
+#           git push
+
+
+
+
