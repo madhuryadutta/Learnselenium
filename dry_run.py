@@ -67,7 +67,7 @@ def func_insert(input_word,word1,explanation1,english1,translate1,keywords1):
     # cur.close()
 
 # declaration block 
-url = os.environ('URL_ENV')
+url = os.environ['URL_ENV']
 # declaration block 
 
 def func_download_db():
