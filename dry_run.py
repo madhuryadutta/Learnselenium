@@ -96,7 +96,7 @@ def func_scrap_data(input_word,):
         
     except NoSuchElementException:
             print("The div element does not exist.")
-
+func_download_db()
 f = open('words_dictionary.json')
 data_dictionary = json.load(f)
 converted_list=list(data_dictionary)
