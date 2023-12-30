@@ -68,6 +68,7 @@ def func_insert(input_word,word1,explanation1,english1,translate1,keywords1):
 
 # declaration block 
 url = os.getenv('URL_ENV')
+url = "https://example.com"
 # declaration block 
 
 def func_download_db():
