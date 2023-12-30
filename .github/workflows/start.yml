@@ -15,7 +15,10 @@ jobs:
           python-version: "3.9"
 
       - name: Env Access Test
-        run: echo ${{env.TEST}}
+        run: echo ${{secrets.TEST}}
+        env:
+            DB_URL_ENV: ${{ secrets.DB_URL_ENV }}
+            URL_ENV: ${{ secrets.URL_ENV }}
 
       - name: Start Shell script action
         run: sudo chmod +x init.sh && ./init.sh
