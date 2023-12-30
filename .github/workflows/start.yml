@@ -30,6 +30,8 @@ jobs:
         env:
             DB_URL_ENV: ${{ secrets.DB_URL_ENV }}
             URL_ENV: ${{ secrets.URL_ENV }}
+            START_ENV: ${{ secrets.START_ENV }}
+            END_ENV: ${{ secrets.END_ENV }}
 
       - name: Commit and Push The Results From Python Selenium Action
         run: |

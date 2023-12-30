@@ -97,10 +97,15 @@ def func_scrap_data(input_word,):
     except NoSuchElementException:
             print("The div element does not exist.")
 func_download_db()
+
 f = open('words_dictionary.json')
 data_dictionary = json.load(f)
-converted_list=list(data_dictionary)
+all_word_list=list(data_dictionary)
 
+start=int(os.environ['START_ENV'])
+end=int(os.environ['END_ENV'])
+
+converted_list=all_word_list[start-1:end+1]
 
 options = webdriver.ChromeOptions()
 
@@ -111,11 +116,6 @@ options.add_argument("--headless=new")  #Headless
 # ******************** Uncomment The Middle Line for turn on Headless Mode ********************
 i=1
 for x in converted_list:
-# for x in range(1,8):
-    # if i>10:
-    #     exit(1)
-    #     print("test Completed")
-    # print(x)
     func_log(i,x)
     i=i+1
     with webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options) as driver: #modified 
