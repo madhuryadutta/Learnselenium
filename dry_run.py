@@ -16,7 +16,7 @@ load_dotenv()
 
 # Get the connection string from the environment variable
 
-# connection_string = os.getenv('DB_URL_ENV')
+# connection_string = os.environ('DB_URL_ENV')
 
 # Connect to the Postgres database
 
@@ -67,8 +67,7 @@ def func_insert(input_word,word1,explanation1,english1,translate1,keywords1):
     # cur.close()
 
 # declaration block 
-url = os.getenv('URL_ENV')
-url = "https://example.com"
+url = os.environ('URL_ENV')
 # declaration block 
 
 def func_download_db():
