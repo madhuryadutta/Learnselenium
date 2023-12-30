@@ -16,9 +16,9 @@ jobs:
 
       - name: Env Access Test
         run: echo ${{secrets.TEST}}
-        env:
-            DB_URL_ENV: ${{ secrets.DB_URL_ENV }}
-            URL_ENV: ${{ secrets.URL_ENV }}
+        # env:
+        #     DB_URL_ENV: ${{ secrets.DB_URL_ENV }}
+        #     URL_ENV: ${{ secrets.URL_ENV }}
 
       - name: Start Shell script action
         run: sudo chmod +x init.sh && ./init.sh
@@ -30,7 +30,7 @@ jobs:
         env:
             DB_URL_ENV: ${{ secrets.DB_URL_ENV }}
             URL_ENV: ${{ secrets.URL_ENV }}
-            
+
       - name: Commit and Push The Results From Python Selenium Action
         run: |
           git config --global user.name "github-actions[bot]"

@@ -112,10 +112,10 @@ options.add_argument("--headless=new")  #Headless
 i=1
 for x in converted_list:
 # for x in range(1,8):
-    if i>10:
-        exit(1)
-        print("test Completed")
-    print(x)
+    # if i>10:
+    #     exit(1)
+    #     print("test Completed")
+    # print(x)
     func_log(i,x)
     i=i+1
     with webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options) as driver: #modified 
