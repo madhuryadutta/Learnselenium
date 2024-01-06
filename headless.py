@@ -131,7 +131,7 @@ for x in converted_list:
         # submit the form and log in
         submit_button.click()
 
-        time.sleep(.1)
+        time.sleep(.2)
         func_scrap_data(x)
 
 # conn.close()
