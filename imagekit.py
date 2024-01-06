@@ -25,10 +25,13 @@ common_part=str(seconds)[:11]
 filename=common_part+'sql'
 log_filename=common_part+'.txt'
 
+print("*********************************************************************************************************************************")
+Print("Uploading Log FIle")
+print("*********************************************************************************************************************************")
 
 upload = imagekit.upload(
-    file=open("output.sql", "rb"),
-    file_name=filename,
+    file=open("log.txt", "rb"),
+    file_name=log_filename,
     options=UploadFileRequestOptions(
         tags = ["tag1", "tag2"]
     )
@@ -39,14 +42,15 @@ print("Upload binary", upload)
 # Raw Response
 print(upload.response_metadata.raw)
 
-# print that uploaded file's ID
-print(upload.file_id)
 
-print("*********************************************************************************************************************************8")
+
+print("*********************************************************************************************************************************")
+print("Uploading Data File")
+print("*********************************************************************************************************************************")
 
 upload = imagekit.upload(
-    file=open("log.txt", "rb"),
-    file_name=log_filename,
+    file=open("output.sql", "rb"),
+    file_name=filename,
     options=UploadFileRequestOptions(
         tags = ["tag1", "tag2"]
     )
