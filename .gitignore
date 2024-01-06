@@ -1,7 +1,8 @@
 google-chrome-stable_current_amd64.deb
 words_dictionary.json
 .env
-
+output.sql
+log.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
