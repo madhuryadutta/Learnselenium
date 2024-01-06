@@ -74,7 +74,7 @@ def func_download_db():
   url="https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json"
   urlretrieve(url, "words_dictionary.json")
 
-def func_scrap_data(input_word,):
+def func_scrap_data(input_word):
     try:
             word_data = driver.find_element(By.ID, "word")
             explaination_data = driver.find_element(By.ID, "explaination")
