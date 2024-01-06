@@ -74,7 +74,7 @@ def func_download_db():
   url="https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json"
   urlretrieve(url, "words_dictionary.json")
 
-def func_scrap_data(input_word,):
+def func_scrap_data(input_word):
     try:
             word_data = driver.find_element(By.ID, "word")
             explaination_data = driver.find_element(By.ID, "explaination")
@@ -83,7 +83,7 @@ def func_scrap_data(input_word,):
             keyword_data = driver.find_element(By.ID, "keyword")
 
             # Get text of div element using <element>.text
-
+            print(word_data.text)
             if(len(word_data.text) != 0):
                 func_insert(input_word,word_data.text ,explaination_data.text ,english_data.text ,translate_data.text,keyword_data.text)
                 # div_text = word_data.text + explaination_data.text + english_data.text + translate_data.text + keyword_data.text
@@ -114,7 +114,7 @@ options = webdriver.ChromeOptions()
 # ******************** Uncomment The Middle Line for turn on Headless Mode ********************
 
 options.add_argument("--headless=new")  #Headless
-
+# options.add_argument('--no-sandbox')   
 # ******************** Uncomment The Middle Line for turn on Headless Mode ********************
 i=1
 for x in converted_list:
