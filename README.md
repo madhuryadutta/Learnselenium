@@ -13,7 +13,7 @@ source my_env/bin/activate
 ## Install Requirment from requirments.txt
 
 ```
-pip install -r requirements. txt
+pip install -r requirements.txt
 ```
 ## Install Requirment for Selenium to run on Linux (using a shell script)
 

@@ -1,5 +1,6 @@
 touch log.txt
 touch output.sql
+sudo apt update
 pip install -r requirements.txt
 pip install python-dotenv
 apt list --installed  

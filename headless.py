@@ -132,7 +132,9 @@ for x in converted_list:
         # submit the form and log in
         submit_button.click()
 
-        time.sleep(.35)
+        time.sleep(1)
         func_scrap_data(x)
-
+        driver.close()
+        
+        # driver.quit()
 # conn.close()
