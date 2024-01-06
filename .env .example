@@ -2,3 +2,6 @@ DB_URL_ENV=postgresql://janedoe:mypassword@localhost:26257/mydb
 URL_ENV=https://www.example.in
 START_ENV=1
 END_ENV=9
+PUBLIC_KEY_ENV=public sfbhgiur78n
+PRIVATE_KEY_ENV=private guihi898569
+URL_ENDPOINT_ENV=htpps://example.com

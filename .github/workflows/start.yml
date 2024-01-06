@@ -14,24 +14,28 @@ jobs:
         with:
           python-version: "3.9"
 
-      - name: Env Access Test
-        run: echo ${{secrets.TEST}}
-        # env:
-        #     DB_URL_ENV: ${{ secrets.DB_URL_ENV }}
-        #     URL_ENV: ${{ secrets.URL_ENV }}
-
       - name: Start Shell script action
         run: sudo chmod +x init.sh && ./init.sh
 
-      - name: Running the Python script
+      - name: Main Program Python script
         run:  | 
           pip install -r requirements.txt
-          python dry_run.py
+          python headless.py
         env:
-            DB_URL_ENV: ${{ secrets.DB_URL_ENV }}
+            # DB_URL_ENV: ${{ secrets.DB_URL_ENV }}
             URL_ENV: ${{ secrets.URL_ENV }}
             START_ENV: ${{ secrets.START_ENV }}
             END_ENV: ${{ secrets.END_ENV }}
+
+      - name: Uploading File to the server
+        run:  | 
+          pip install -r requirements.txt
+          python imagekit.py
+        env:
+            PUBLIC_KEY_ENV: ${{ secrets.PUBLIC_KEY_ENV }}
+            PRIVATE_KEY_ENV: ${{ secrets.PRIVATE_KEY_ENV }}
+            START_ENV: ${{ secrets.START_ENV }}
+            URL_ENDPOINT_ENV: ${{ secrets.URL_ENDPOINT_ENV }}
 
       - name: Commit and Push The Results From Python Selenium Action
         run: |

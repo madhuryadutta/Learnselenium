@@ -1,3 +1,5 @@
+touch log.txt
+touch output.sql
 pip install -r requirements.txt
 pip install python-dotenv
 apt list --installed  
@@ -10,6 +12,8 @@ yes |sudo dpkg -i google-chrome-stable_current_amd64.deb
 yes |sudo apt-get -f install
 google-chrome
 yes |sudo dpkg -i google-chrome-stable_current_amd64.deb
+
+
 
 
 #     1  ls

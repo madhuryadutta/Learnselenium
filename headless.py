@@ -16,11 +16,11 @@ load_dotenv()
 
 # Get the connection string from the environment variable
 
-connection_string = os.getenv('DB_URL_ENV')
+# connection_string = os.environ('DB_URL_ENV')
 
 # Connect to the Postgres database
 
-conn = psycopg2.connect(connection_string)
+# conn = psycopg2.connect(connection_string)
 
 # conn.autocommit = True
 
@@ -32,7 +32,7 @@ def func_log(serial,word):
         f.close()
 
 
-def func_insert(input_word,,word1,explanation1,english1,translate1,keywords1):
+def func_insert(input_word,word1,explanation1,english1,translate1,keywords1):
 
     word=word1.replace("'", "''")
     explanation=explanation1.replace("'", "''")
@@ -41,40 +41,40 @@ def func_insert(input_word,,word1,explanation1,english1,translate1,keywords1):
     keywords=keywords1.replace("'", "''")
 
     # Create a cursor object
-    cur = conn.cursor()
+    # cur = conn.cursor()
 
     #Create Sql query
     sql_query='''INSERT INTO words_tables (word, explanation, english, translate, keywords, as_soundex)
                     VALUES (' '''+ input_word + ''' ', ' '''+ explanation + ''' ', ' ''' + english + ''' ', ' '''+word+ ''' ', ' ''' +keywords +''' ', 'NA');'''
-
-    try:
-        cur.execute(sql_query)
-    except psycopg2.IntegrityError:
-        conn.rollback()
-        print('data already exist')
-    else:
-        with open('output.sql', 'a', encoding='utf-8') as f:
-            f.write(sql_query)
-            f.close()
-        conn.commit()
-
-    # with open('output.sql', 'a', encoding='utf-8') as f:
+    print(sql_query)
+    # try:
+    #     cur.execute(sql_query)
+    # except psycopg2.IntegrityError:
+    #     conn.rollback()
+    #     print('data already exist')
+    # else:
+    #     with open('output.sql', 'a', encoding='utf-8') as f:
     #         f.write(sql_query)
     #         f.close()
+        # conn.commit()
+
+    with open('output.sql', 'a', encoding='utf-8') as f:
+            f.write(sql_query)
+            f.close()
 
 
     # Close the cursor and connection
-    cur.close()
+    # cur.close()
 
 # declaration block 
-url = os.getenv('URL_ENV')
+url = os.environ['URL_ENV']
 # declaration block 
 
 def func_download_db():
   url="https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json"
   urlretrieve(url, "words_dictionary.json")
 
-def func_scrap_data():
+def func_scrap_data(input_word,):
     try:
             word_data = driver.find_element(By.ID, "word")
             explaination_data = driver.find_element(By.ID, "explaination")
@@ -85,7 +85,7 @@ def func_scrap_data():
             # Get text of div element using <element>.text
 
             if(len(word_data.text) != 0):
-                func_insert(word_data.text ,explaination_data.text ,english_data.text ,translate_data.text,keyword_data.text)
+                func_insert(input_word,word_data.text ,explaination_data.text ,english_data.text ,translate_data.text,keyword_data.text)
                 # div_text = word_data.text + explaination_data.text + english_data.text + translate_data.text + keyword_data.text
                 # print(div_text)
                 # with open('demofile2.sql', 'a', encoding='utf-8') as f:
@@ -97,11 +97,18 @@ def func_scrap_data():
     except NoSuchElementException:
             print("The div element does not exist.")
 func_download_db()
+
 f = open('words_dictionary.json')
 data_dictionary = json.load(f)
-converted_list=list(data_dictionary)
+all_word_list=list(data_dictionary)
 
+start=int(os.environ['START_ENV'])
+end=int(os.environ['END_ENV'])
 
+if start==0 & end==0:
+    converted_list=all_word_list
+else:
+    converted_list=all_word_list[start-1:end+1]
 options = webdriver.ChromeOptions()
 
 # ******************** Uncomment The Middle Line for turn on Headless Mode ********************
@@ -111,8 +118,6 @@ options.add_argument("--headless=new")  #Headless
 # ******************** Uncomment The Middle Line for turn on Headless Mode ********************
 i=1
 for x in converted_list:
-# for x in range(1,8):
-    print(x)
     func_log(i,x)
     i=i+1
     with webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options) as driver: #modified 
@@ -127,6 +132,6 @@ for x in converted_list:
         submit_button.click()
 
         time.sleep(.1)
-        func_scrap_data()
+        func_scrap_data(x)
 
-conn.close()
+# conn.close()
