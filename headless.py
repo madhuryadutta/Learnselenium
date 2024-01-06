@@ -46,7 +46,8 @@ def func_insert(input_word,word1,explanation1,english1,translate1,keywords1):
     #Create Sql query
     sql_query='''INSERT INTO words_tables (word, explanation, english, translate, keywords, as_soundex)
                     VALUES (' '''+ input_word + ''' ', ' '''+ explanation + ''' ', ' ''' + english + ''' ', ' '''+word+ ''' ', ' ''' +keywords +''' ', 'NA');'''
-    print(sql_query)
+    # print(sql_query)
+    
     # try:
     #     cur.execute(sql_query)
     # except psycopg2.IntegrityError:
@@ -83,7 +84,7 @@ def func_scrap_data(input_word):
             keyword_data = driver.find_element(By.ID, "keyword")
 
             # Get text of div element using <element>.text
-
+            print(word_data.text)
             if(len(word_data.text) != 0):
                 func_insert(input_word,word_data.text ,explaination_data.text ,english_data.text ,translate_data.text,keyword_data.text)
                 # div_text = word_data.text + explaination_data.text + english_data.text + translate_data.text + keyword_data.text
@@ -114,7 +115,7 @@ options = webdriver.ChromeOptions()
 # ******************** Uncomment The Middle Line for turn on Headless Mode ********************
 
 options.add_argument("--headless=new")  #Headless
-
+# options.add_argument('--no-sandbox')   
 # ******************** Uncomment The Middle Line for turn on Headless Mode ********************
 i=1
 for x in converted_list:
@@ -131,8 +132,7 @@ for x in converted_list:
         # submit the form and log in
         submit_button.click()
 
-        time.sleep(.1)
+        time.sleep(1)
         func_scrap_data(x)
 
 # conn.close()
-
