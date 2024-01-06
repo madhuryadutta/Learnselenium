@@ -9,6 +9,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service as ChromeService 
 from webdriver_manager.chrome import ChromeDriverManager 
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import WebDriverException
 import psycopg2
 
 from dotenv import load_dotenv
@@ -43,9 +45,10 @@ def func_insert(input_word,word1,explanation1,english1,translate1,keywords1):
     # Create a cursor object
     # cur = conn.cursor()
 
+
     #Create Sql query
     sql_query='''INSERT INTO words_tables (word, explanation, english, translate, keywords, as_soundex)
-                    VALUES (' '''+ input_word + ''' ', ' '''+ explanation + ''' ', ' ''' + english + ''' ', ' '''+word+ ''' ', ' ''' +keywords +''' ', 'NA');'''
+                    VALUES (' '''+ input_word + ''' ', ' '''+ explanation + ''' ', ' ''' + english + ''' ', ' '''+word+ ''' ', ' ''' +keywords +''' ', 'NA') ON CONFLICT (word) DO NOTHING;'''
     # print(sql_query)
     
     # try:
@@ -93,7 +96,7 @@ def func_scrap_data(input_word):
                 #     f.write(div_text)
                 #     f.close()
             else:
-                print("No")   
+                print("No For - "+input_word)   
         
     except NoSuchElementException:
             print("The div element does not exist.")
@@ -115,26 +118,33 @@ options = webdriver.ChromeOptions()
 # ******************** Uncomment The Middle Line for turn on Headless Mode ********************
 
 options.add_argument("--headless=new")  #Headless
-# options.add_argument('--no-sandbox')   
+options.add_argument('--no-sandbox')
+options.add_argument('-disable-gpu')
+options.add_argument('--disable-dev-shm-usage')   
+
 # ******************** Uncomment The Middle Line for turn on Headless Mode ********************
 i=1
 for x in converted_list:
     func_log(i,x)
     i=i+1
-    with webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options) as driver: #modified 
-        driver.get(url)
-        # print("Page URL:", driver.current_url)        
-        word_input = driver.find_element(By.ID, 'word0')
-        submit_button = driver.find_element(By.ID, 'search')
-        # filling out the form elements
-        word_input.send_keys(x)
-        # word_input.send_keys('Assamese')
-        # submit the form and log in
-        submit_button.click()
+    try:
+        with webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options) as driver: #modified 
+            driver.get(url)
+            # print("Page URL:", driver.current_url)        
+            word_input = driver.find_element(By.ID, 'word0')
+            submit_button = driver.find_element(By.ID, 'search')
+            # filling out the form elements
+            word_input.send_keys(x)
+            # word_input.send_keys('Assamese')
+            # submit the form and log in
+            submit_button.click()
+            time.sleep(.35)
+            func_scrap_data(x)
+            driver.close()
+            # driver.quit()
+    except TimeoutException:
+            print("The connection to the Host timed out!");
+    except WebDriverException:
+            print("Something went wrong with our service");
 
-        time.sleep(1)
-        func_scrap_data(x)
-        driver.close()
-        
-        # driver.quit()
 # conn.close()
