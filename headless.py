@@ -138,7 +138,7 @@ for x in converted_list:
             # word_input.send_keys('Assamese')
             # submit the form and log in
             submit_button.click()
-            time.sleep(.25)
+            time.sleep(.35)
             func_scrap_data(x)
             driver.close()
             # driver.quit()
