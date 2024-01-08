@@ -26,9 +26,9 @@ load_dotenv()
 
 # conn.autocommit = True
 
-def func_log(serial,word):
+def func_log(serial,word,status):
     log_time = datetime.datetime.now()
-    log_single_line=str(log_time) + ' |------ Word No: '+ str(serial) + ' ----- | Name: ' + str(word)
+    log_single_line=str(log_time) + ' | ----- Status: ' + str(status) + ' |------ Word No: '+ str(serial) + ' ----- | ----- Name: ' + str(word) 
     with open('log.txt', 'a', encoding='utf-8') as f:
         f.write(log_single_line + '\n')
         f.close()
@@ -48,7 +48,7 @@ def func_insert(input_word,word1,explanation1,english1,translate1,keywords1):
 
     #Create Sql query
     sql_query='''INSERT INTO words_tables (word, explanation, english, translate, keywords, as_soundex)
-                    VALUES (' '''+ input_word + ''' ', ' '''+ explanation + ''' ', ' ''' + english + ''' ', ' '''+word+ ''' ', ' ''' +keywords +''' ', 'NA') ON CONFLICT (word) DO NOTHING;'''
+                    VALUES (\''''+ input_word + '''\', \''''+ explanation + '''\', \'''' + english + '''\', \''''+word+ '''\', \'''' +keywords +'''\', 'NA') ON CONFLICT (word) DO NOTHING;'''
     # print(sql_query)
     
     # try:
@@ -76,7 +76,7 @@ url = os.environ['URL_ENV']
 
 def func_download_db():
   # url="https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json" 
-  url="https://raw.githubusercontent.com/madhuryadutta/testNetlify/Python/python_List_To_DIctionary_to_JSON_Convert/wordlist.json"  #Only 3000 words 
+  url="https://raw.githubusercontent.com/madhuryadutta/testNetlify/main/python_List_To_DIctionary_to_JSON_Convert/wordlist.json"  #Bellow 5000 words 
   urlretrieve(url, "words_dictionary.json")
 
 def func_scrap_data(input_word):
@@ -88,6 +88,7 @@ def func_scrap_data(input_word):
             keyword_data = driver.find_element(By.ID, "keyword")
 
             # Get text of div element using <element>.text
+            # print(input_word)
             print(word_data.text)
             if(len(word_data.text) != 0):
                 func_insert(input_word,word_data.text ,explaination_data.text ,english_data.text ,translate_data.text,keyword_data.text)
@@ -125,8 +126,10 @@ options.add_argument('--disable-dev-shm-usage')
 
 # ******************** Uncomment The Middle Line for turn on Headless Mode ********************
 i=1
+ok_status_code=' 200--OK      '
+timeout_status_code=' 408--Timeout '
+error_status_code=' 500--ERROR   '
 for x in converted_list:
-    func_log(i,x)
     i=i+1
     try:
         with webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options) as driver: #modified 
@@ -143,9 +146,11 @@ for x in converted_list:
             func_scrap_data(x)
             driver.close()
             # driver.quit()
+            func_log(i,x,ok_status_code)
     except TimeoutException:
             print("The connection to the Host timed out!");
+            func_log(i,x,timeout_status_code)
     except WebDriverException:
             print("Something went wrong with our service");
-
+            func_log(i,x,error_status_code)    
 # conn.close()

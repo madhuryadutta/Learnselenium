@@ -21,9 +21,9 @@ imagekit = ImageKit(
 
 # get the current time in seconds since the epoch
 seconds = time.time()
-common_part=str(seconds)[:11]
-filename=common_part+'sql'
-log_filename=common_part+'.txt'
+common_part=str(seconds)[:9]
+filename='db_'+common_part+'.sql'
+log_filename='log_'+common_part+'.txt'
 
 print("*********************************************************************************************************************************")
 print("Uploading Log FIle")
