@@ -148,9 +148,9 @@ for x in converted_list:
             # driver.quit()
             func_log(i,x,ok_status_code)
     except TimeoutException:
+            func_log(i,x,timeout_status_code);
             print("The connection to the Host timed out!");
-            func_log(i,x,timeout_status_code)
     except WebDriverException:
+            func_log(i,x,error_status_code);    
             print("Something went wrong with our service");
-            func_log(i,x,error_status_code)    
 # conn.close()
