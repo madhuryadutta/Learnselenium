@@ -75,7 +75,8 @@ url = os.environ['URL_ENV']
 # declaration block 
 
 def func_download_db():
-  url="https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json"
+  # url="https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json" 
+  url="https://raw.githubusercontent.com/madhuryadutta/testNetlify/Python/python_List_To_DIctionary_to_JSON_Convert/wordlist.json"  #Only 3000 words 
   urlretrieve(url, "words_dictionary.json")
 
 def func_scrap_data(input_word):
